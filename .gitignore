@@ -1,0 +1,36 @@
+# Dependencies (none are used - the project is framework-free)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor and OS cruft
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# Build output (there is no build step, but ignore these if a tool adds them)
+dist/
+build/
+.cache/
+.parcel-cache/
+.vercel/
+.netlify/
+
+# Local env
+.env
+.env.*
+!.env.example
+
+# Test artifacts
+coverage/
+tests/coverage/

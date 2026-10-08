@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="AlgoVisualizer">
+  <rect width="32" height="32" rx="7" fill="#4f46e5"/>
+  <g stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" fill="none">
+    <line x1="7" y1="25" x2="7" y2="17"/>
+    <line x1="13" y1="25" x2="13" y2="11"/>
+    <line x1="19" y1="25" x2="19" y2="19"/>
+    <line x1="25" y1="25" x2="25" y2="8"/>
+    <polyline points="5 13 11 7 17 12 27 4"/>
+  </g>
+</svg>

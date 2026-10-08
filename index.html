@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-reduced-motion="false">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AlgoVisualizer - See the algorithm work</title>
+  <meta name="description" content="Step through sorting, searching, graph and data-structure algorithms one event at a time. A framework-free visualization platform built with plain HTML, CSS and JavaScript.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#4f46e5">
+
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/favicon.svg">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <script>
+    // Apply the stored theme before first paint so there is no flash.
+    (function () {
+      try {
+        var stored = JSON.parse(localStorage.getItem("av:prefs") || "{}");
+        var theme = stored.theme || "system";
+        if (theme === "system") {
+          theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark" : "light";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+        if (stored.reducedMotion) {
+          document.documentElement.setAttribute("data-reduced-motion", "true");
+        }
+      } catch (e) { /* private mode or corrupt payload - fall back to CSS defaults */ }
+    })();
+  </script>
+</head>
+<body>
+  <div class="app">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- .site-header is inserted here by js/app.js -->
+
+    <div class="app-body">
+      <!-- .sidebar and its scrim are inserted here by js/app.js -->
+      <main class="main" id="main" tabindex="-1">
+        <div class="view">
+          <div class="page">
+            <div class="empty-state" role="status">
+              <div class="skeleton" style="width: 60%; height: 28px; margin-bottom: 12px;"></div>
+              <div class="skeleton" style="width: 40%; height: 16px;"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <strong>AlgoVisualizer</strong> - Project 02 of a 10-project portfolio.
+          Built with plain HTML, CSS and ES6+. No frameworks, no build step.
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="#/algorithms">Algorithms</a>
+          <a href="#/structures">Structures</a>
+          <a href="#/learning">Lessons</a>
+          <a href="#/quiz">Quiz</a>
+          <a href="#/benchmark">Benchmark</a>
+          <a href="#/compare">Compare</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ====================================================================
+       Utilities (no cross-dependencies beyond AV.format)
+       ==================================================================== -->
+  <script src="js/utils/format.js"></script>
+  <script src="js/utils/random.js"></script>
+  <script src="js/utils/storage.js"></script>
+  <script src="js/utils/validation.js"></script>
+
+  <!-- ====================================================================
+       Core engines and state
+       ==================================================================== -->
+  <script src="js/core/eventBus.js"></script>
+  <script src="js/core/registry.js"></script>
+  <script src="js/core/graphModel.js"></script>
+  <script src="js/core/visualizationEngine.js"></script>
+  <script src="js/core/executionEngine.js"></script>
+  <script src="js/core/metrics.js"></script>
+
+  <!-- Registries must exist before definitions register themselves. -->
+  <script src="js/data/algorithms.js"></script>
+  <script src="js/data/dataStructures.js"></script>
+
+  <!-- benchmark needs AV.linkedListInput / AV.binarySearchTreeInput from above. -->
+  <script src="js/core/benchmark.js"></script>
+
+  <!-- state.js builds AV.app at load time, so it comes after storage + SPEEDS. -->
+  <script src="js/core/state.js"></script>
+
+  <script src="js/data/learning.js"></script>
+  <script src="js/data/quizQuestions.js"></script>
+
+  <!-- ====================================================================
+       Algorithm and structure definitions
+       ==================================================================== -->
+  <script src="js/algorithms/sorting/bubbleSort.js"></script>
+  <script src="js/algorithms/sorting/selectionSort.js"></script>
+  <script src="js/algorithms/sorting/insertionSort.js"></script>
+  <script src="js/algorithms/sorting/mergeSort.js"></script>
+  <script src="js/algorithms/sorting/quickSort.js"></script>
+  <script src="js/algorithms/sorting/heapSort.js"></script>
+
+  <script src="js/algorithms/searching/linearSearch.js"></script>
+  <script src="js/algorithms/searching/binarySearch.js"></script>
+
+  <script src="js/algorithms/patterns/twoPointer.js"></script>
+  <script src="js/algorithms/patterns/slidingWindow.js"></script>
+  <script src="js/algorithms/patterns/prefixSum.js"></script>
+
+  <script src="js/algorithms/graphs/bfs.js"></script>
+  <script src="js/algorithms/graphs/dfs.js"></script>
+  <script src="js/algorithms/graphs/dijkstra.js"></script>
+
+  <script src="js/algorithms/recursion/factorial.js"></script>
+  <script src="js/algorithms/recursion/fibonacci.js"></script>
+
+  <script src="js/dataStructures/array.js"></script>
+  <script src="js/dataStructures/stack.js"></script>
+  <script src="js/dataStructures/queue.js"></script>
+  <script src="js/dataStructures/linkedList.js"></script>
+  <script src="js/dataStructures/binarySearchTree.js"></script>
+
+  <!-- ====================================================================
+       DOM helpers, renderers, UI modules
+       ==================================================================== -->
+  <script src="js/dom/dom.js"></script>
+
+  <script src="js/renderers/array.js"></script>
+  <script src="js/renderers/stackQueue.js"></script>
+  <script src="js/renderers/linked.js"></script>
+  <script src="js/renderers/tree.js"></script>
+  <script src="js/renderers/graph.js"></script>
+  <script src="js/renderers/recursion.js"></script>
+  <script src="js/renderers/auxiliary.js"></script>
+  <script src="js/renderers/index.js"></script>
+
+  <script src="js/ui/feedback.js"></script>
+  <script src="js/ui/search.js"></script>
+  <script src="js/ui/controls.js"></script>
+  <script src="js/ui/panel.js"></script>
+  <script src="js/ui/sidebar.js"></script>
+  <script src="js/ui/header.js"></script>
+  <script src="js/ui/inputs.js"></script>
+
+  <!-- ====================================================================
+       Views and the application controller
+       ==================================================================== -->
+  <script src="js/views/workspace.js"></script>
+  <script src="js/views/home.js"></script>
+  <script src="js/views/catalog.js"></script>
+  <script src="js/views/learning.js"></script>
+  <script src="js/views/quiz.js"></script>
+  <script src="js/views/benchmark.js"></script>
+  <script src="js/views/compare.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

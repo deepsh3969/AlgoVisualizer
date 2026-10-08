@@ -1,0 +1,267 @@
+/* ==========================================================================
+   AlgoVisualizer - Design tokens
+   Single source of truth for color, type, spacing, radius, shadow, motion.
+   Themes are switched by [data-theme="light" | "dark"] on <html>.
+   ========================================================================== */
+
+:root {
+  /* ---- Primitive palettes (raw values, not used directly in components) -- */
+  --av-blue-50: #eef2ff;
+  --av-blue-100: #dfe6ff;
+  --av-blue-200: #c3cdff;
+  --av-blue-300: #9aabff;
+  --av-blue-400: #7183f8;
+  --av-blue-500: #4c5fee;
+  --av-blue-600: #3447d8;
+  --av-blue-700: #2b3aab;
+  --av-blue-800: #263489;
+  --av-blue-900: #232f6d;
+
+  --av-slate-0: #ffffff;
+  --av-slate-25: #fbfcfd;
+  --av-slate-50: #f5f7fa;
+  --av-slate-100: #edf0f5;
+  --av-slate-200: #e2e7ee;
+  --av-slate-300: #cbd3de;
+  --av-slate-400: #9aa5b5;
+  --av-slate-500: #6e7a8c;
+  --av-slate-600: #556173;
+  --av-slate-700: #3d4757;
+  --av-slate-800: #262e3b;
+  --av-slate-850: #1c222c;
+  --av-slate-900: #161b23;
+  --av-slate-950: #0e1218;
+
+  /* ---- Brand & semantic (light) ---------------------------------------- */
+  --av-brand: var(--av-blue-600);
+  --av-brand-hover: var(--av-blue-700);
+  --av-brand-active: var(--av-blue-800);
+  --av-brand-soft: var(--av-blue-50);
+  --av-brand-soft-border: var(--av-blue-200);
+  --av-brand-on: #ffffff;
+
+  --av-bg: var(--av-slate-50);
+  --av-bg-elevated: var(--av-slate-0);
+  --av-surface: var(--av-slate-0);
+  --av-surface-alt: var(--av-slate-100);
+  --av-surface-sunken: var(--av-slate-100);
+  --av-surface-inset: var(--av-slate-25);
+
+  --av-border: var(--av-slate-200);
+  --av-border-strong: var(--av-slate-300);
+  --av-border-subtle: var(--av-slate-100);
+
+  --av-text: #131820;
+  --av-text-secondary: var(--av-slate-600);
+  --av-text-muted: var(--av-slate-500);
+  --av-text-inverse: #ffffff;
+
+  --av-success: #0e7a52;
+  --av-success-soft: #e4f6ee;
+  --av-success-border: #a9dcc6;
+  --av-warning: #a35a06;
+  --av-warning-soft: #fdf1de;
+  --av-warning-border: #f0cc93;
+  --av-danger: #c02f2f;
+  --av-danger-soft: #fdeaea;
+  --av-danger-border: #f2bcbc;
+  --av-info: #0f6f9e;
+  --av-info-soft: #e5f3fa;
+  --av-info-border: #a8d5ea;
+
+  /* ---- Category accents ------------------------------------------------- */
+  --av-cat-sorting: var(--av-blue-600);
+  --av-cat-searching: #6d3ed8;
+  --av-cat-patterns: #0e7a72;
+  --av-cat-graphs: #b45309;
+  --av-cat-recursion: #c2410c;
+  --av-cat-structures: #be1f5c;
+  --av-cat-learning: #0f766e;
+
+  /* ---- Visualization state colors -------------------------------------- */
+  --av-viz-default: var(--av-blue-400);
+  --av-viz-default-edge: var(--av-blue-600);
+  --av-viz-compare: #d97706;
+  --av-viz-compare-edge: #92400e;
+  --av-viz-swap: #dc2626;
+  --av-viz-swap-edge: #991b1b;
+  --av-viz-active: #4338ca;
+  --av-viz-sorted: #10b981;
+  --av-viz-sorted-edge: #047857;
+  --av-viz-found: #0e9f6e;
+  --av-viz-eliminated: #cbd5e1;
+  --av-viz-pivot: #d946ef;
+  --av-viz-candidate: #f59e0b;
+  --av-viz-muted: var(--av-slate-400);
+
+  /* ---- Typography ------------------------------------------------------- */
+  --av-font-sans: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", Arial, sans-serif;
+  --av-font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --av-text-xs: 0.6875rem;   /* 11px */
+  --av-text-sm: 0.75rem;     /* 12px */
+  --av-text-base: 0.8125rem; /* 13px */
+  --av-text-md: 0.875rem;    /* 14px */
+  --av-text-lg: 1rem;        /* 16px */
+  --av-text-xl: 1.125rem;    /* 18px */
+  --av-text-2xl: 1.375rem;   /* 22px */
+  --av-text-3xl: 1.75rem;    /* 28px */
+  --av-text-4xl: 2.25rem;    /* 36px */
+
+  --av-leading-tight: 1.2;
+  --av-leading-snug: 1.35;
+  --av-leading-normal: 1.55;
+
+  --av-weight-regular: 400;
+  --av-weight-medium: 500;
+  --av-weight-semibold: 600;
+  --av-weight-bold: 700;
+
+  /* ---- Spacing ---------------------------------------------------------- */
+  --av-space-0: 0;
+  --av-space-1: 0.25rem;
+  --av-space-2: 0.5rem;
+  --av-space-3: 0.75rem;
+  --av-space-4: 1rem;
+  --av-space-5: 1.25rem;
+  --av-space-6: 1.5rem;
+  --av-space-7: 1.75rem;
+  --av-space-8: 2rem;
+  --av-space-10: 2.5rem;
+  --av-space-12: 3rem;
+  --av-space-16: 4rem;
+
+  /* ---- Radius ----------------------------------------------------------- */
+  --av-radius-xs: 3px;
+  --av-radius-sm: 5px;
+  --av-radius-md: 7px;
+  --av-radius-lg: 10px;
+  --av-radius-xl: 14px;
+  --av-radius-pill: 999px;
+
+  /* ---- Shadows (restrained) -------------------------------------------- */
+  --av-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --av-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --av-shadow-md: 0 2px 4px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.07);
+  --av-shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(15, 23, 42, 0.06);
+  --av-shadow-focus: 0 0 0 3px rgba(52, 71, 216, 0.35);
+
+  /* ---- Layout ----------------------------------------------------------- */
+  --av-header-h: 56px;
+  --av-sidebar-w: 248px;
+  --av-panel-w: 336px;
+  --av-controls-h: 84px;
+  --av-maxw: 1440px;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --av-dur-instant: 60ms;
+  --av-dur-fast: 120ms;
+  --av-dur-base: 200ms;
+  --av-dur-slow: 340ms;
+  --av-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --av-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Z-index scale ---------------------------------------------------- */
+  --av-z-sticky: 20;
+  --av-z-header: 40;
+  --av-z-sidebar: 45;
+  --av-z-dropdown: 60;
+  --av-z-overlay: 80;
+  --av-z-modal: 90;
+  --av-z-toast: 100;
+}
+
+/* ==========================================================================
+   Dark theme
+   ========================================================================== */
+[data-theme="dark"] {
+  --av-brand: #7d90ff;
+  --av-brand-hover: #93a3ff;
+  --av-brand-active: #6d84f7;
+  --av-brand-soft: #1b2340;
+  --av-brand-soft-border: #2f3b6b;
+  --av-brand-on: #0d1226;
+
+  --av-bg: var(--av-slate-950);
+  --av-bg-elevated: var(--av-slate-900);
+  --av-surface: var(--av-slate-900);
+  --av-surface-alt: var(--av-slate-850);
+  --av-surface-sunken: #12161d;
+  --av-surface-inset: var(--av-slate-850);
+
+  --av-border: #262d38;
+  --av-border-strong: #39424f;
+  --av-border-subtle: #1e242d;
+
+  --av-text: #e8ecf3;
+  --av-text-secondary: #aab4c3;
+  --av-text-muted: #7e8a9b;
+  --av-text-inverse: #0e1218;
+
+  --av-success: #37c98d;
+  --av-success-soft: #0f2a20;
+  --av-success-border: #1d5741;
+  --av-warning: #e2a33f;
+  --av-warning-soft: #2c2110;
+  --av-warning-border: #5c4620;
+  --av-danger: #f16b6b;
+  --av-danger-soft: #2e1616;
+  --av-danger-border: #5f2a2a;
+  --av-info: #56b6e2;
+  --av-info-soft: #10242e;
+  --av-info-border: #224a5c;
+
+  --av-cat-sorting: #7d90ff;
+  --av-cat-searching: #a78bfa;
+  --av-cat-patterns: #35c2b4;
+  --av-cat-graphs: #eaa751;
+  --av-cat-recursion: #f98a5a;
+  --av-cat-structures: #f472a4;
+  --av-cat-learning: #4ecbb8;
+
+  --av-viz-default: #5f7bf5;
+  --av-viz-default-edge: #8ba1ff;
+  --av-viz-compare: #f5a524;
+  --av-viz-compare-edge: #f7c46b;
+  --av-viz-swap: #f05656;
+  --av-viz-swap-edge: #f88a8a;
+  --av-viz-active: #8f8bff;
+  --av-viz-sorted: #2ecc93;
+  --av-viz-sorted-edge: #6ee7bc;
+  --av-viz-found: #2ecc93;
+  --av-viz-eliminated: #39414f;
+  --av-viz-pivot: #e879f9;
+  --av-viz-candidate: #fbbf24;
+  --av-viz-muted: #4b5565;
+
+  --av-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --av-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --av-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.5), 0 6px 16px rgba(0, 0, 0, 0.4);
+  --av-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55), 0 4px 10px rgba(0, 0, 0, 0.4);
+  --av-shadow-focus: 0 0 0 3px rgba(125, 144, 255, 0.4);
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Reduced motion: kill all non-essential animation globally. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --av-dur-instant: 0ms;
+    --av-dur-fast: 0ms;
+    --av-dur-base: 0ms;
+    --av-dur-slow: 0ms;
+  }
+}
+
+html[data-reduced-motion="true"] {
+  --av-dur-instant: 0ms;
+  --av-dur-fast: 0ms;
+  --av-dur-base: 0ms;
+  --av-dur-slow: 0ms;
+}

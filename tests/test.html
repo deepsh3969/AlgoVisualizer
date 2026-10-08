@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AlgoVisualizer - Browser test suite</title>
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7fb; --surface: #ffffff; --border: #e3e6ef; --border-sub: #eef0f6;
+      --text: #16181d; --muted: #6b7280; --brand: #4f46e5;
+      --ok: #16a34a; --ok-soft: #ecfdf3; --bad: #dc2626; --bad-soft: #fef2f2;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d0f14; --surface: #151821; --border: #262b38; --border-sub: #1d212c;
+        --text: #e7eaf0; --muted: #98a1b3; --brand: #818cf8;
+        --ok: #4ade80; --ok-soft: #0d2a1a; --bad: #f87171; --bad-soft: #2c1416;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    header {
+      position: sticky; top: 0; z-index: 5; background: var(--surface);
+      border-bottom: 1px solid var(--border); padding: 14px 20px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    h1 { font-size: 17px; margin: 0; letter-spacing: -0.01em; }
+    .summary { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .pill {
+      font: 600 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 6px 11px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .pill.pass { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+    .pill.fail { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
+    .pill.run  { color: var(--brand); }
+    main { max-width: 1080px; margin: 0 auto; padding: 20px; }
+    .group { margin-bottom: 22px; }
+    .group h2 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--muted); margin: 0 0 8px; display: flex; gap: 10px; align-items: baseline;
+    }
+    .group h2 .count { font-variant-numeric: tabular-nums; }
+    ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+    li {
+      display: flex; gap: 10px; align-items: flex-start;
+      background: var(--surface); border: 1px solid var(--border-sub);
+      border-radius: 7px; padding: 7px 11px; font-size: 14px;
+    }
+    li.ok::before {
+      content: "PASS"; color: var(--ok); font: 700 10px/1.5 ui-monospace, monospace;
+      letter-spacing: 0.05em; flex: 0 0 auto; width: 34px;
+    }
+    li.bad { border-color: color-mix(in srgb, var(--bad) 45%, transparent); background: var(--bad-soft); }
+    li.bad::before {
+      content: "FAIL"; color: var(--bad); font: 700 10px/1.5 ui-monospace, monospace;
+      letter-spacing: 0.05em; flex: 0 0 auto; width: 34px;
+    }
+    li .msg { color: var(--bad); font-family: ui-monospace, monospace; font-size: 13px; word-break: break-word; }
+    .loading { color: var(--muted); padding: 40px 0; text-align: center; }
+    button {
+      font: 500 13px/1 ui-sans-serif, system-ui, sans-serif;
+      padding: 7px 13px; border-radius: 7px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--text); cursor: pointer;
+    }
+    button:hover { border-color: var(--brand); }
+    button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+    footer { color: var(--muted); font-size: 13px; padding: 20px; text-align: center; }
+    code { font-family: ui-monospace, monospace; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AlgoVisualizer test suite</h1>
+    <div class="summary">
+      <span class="pill run" id="status">Loading sources&hellip;</span>
+      <button type="button" id="rerun" hidden>Re-run</button>
+    </div>
+  </header>
+  <main id="out"><p class="loading">Loading sources&hellip;</p></main>
+  <footer>
+    Same assertions as <code>node tests/run-tests.js</code> -
+    <code>tests/suite.js</code> runs identically in both environments.
+  </footer>
+
+  <script>
+    // Mirror tests/run-tests.js exactly. If you add a file there, add it here.
+    var SOURCES = [
+      "js/utils/format.js",
+      "js/utils/random.js",
+      "js/utils/storage.js",
+      "js/utils/validation.js",
+      "js/core/eventBus.js",
+      "js/core/registry.js",
+      "js/core/graphModel.js",
+      "js/core/state.js",
+      "js/core/visualizationEngine.js",
+      "js/core/executionEngine.js",
+      "js/data/algorithms.js",
+      "js/data/dataStructures.js",
+      "js/data/learning.js",
+      "js/data/quizQuestions.js",
+      "js/algorithms/sorting/bubbleSort.js",
+      "js/algorithms/sorting/selectionSort.js",
+      "js/algorithms/sorting/insertionSort.js",
+      "js/algorithms/sorting/mergeSort.js",
+      "js/algorithms/sorting/quickSort.js",
+      "js/algorithms/sorting/heapSort.js",
+      "js/algorithms/searching/linearSearch.js",
+      "js/algorithms/searching/binarySearch.js",
+      "js/algorithms/patterns/twoPointer.js",
+      "js/algorithms/patterns/slidingWindow.js",
+      "js/algorithms/patterns/prefixSum.js",
+      "js/algorithms/graphs/bfs.js",
+      "js/algorithms/graphs/dfs.js",
+      "js/algorithms/graphs/dijkstra.js",
+      "js/algorithms/recursion/factorial.js",
+      "js/algorithms/recursion/fibonacci.js",
+      "js/dataStructures/array.js",
+      "js/dataStructures/stack.js",
+      "js/dataStructures/queue.js",
+      "js/dataStructures/linkedList.js",
+      "js/dataStructures/binarySearchTree.js",
+      "js/core/metrics.js",
+      "js/core/benchmark.js"
+    ];
+
+    var TEST_SUITES = [
+      "tests/utilities/format.test.js",
+      "tests/utilities/random.test.js",
+      "tests/utilities/validation.test.js",
+      "tests/algorithms/sorting.test.js",
+      "tests/algorithms/searching.test.js",
+      "tests/algorithms/patterns.test.js",
+      "tests/algorithms/graphs.test.js",
+      "tests/algorithms/recursion.test.js",
+      "tests/algorithms/events.test.js",
+      "tests/data/learning.test.js",
+      "tests/data/quiz.test.js",
+      "tests/dataStructures/stack.test.js",
+      "tests/dataStructures/queue.test.js",
+      "tests/dataStructures/linkedList.test.js",
+      "tests/dataStructures/binarySearchTree.test.js",
+      "tests/dataStructures/array.test.js",
+      "tests/core/state.test.js",
+      "tests/core/metrics.test.js",
+      "tests/core/benchmark.test.js",
+      "tests/core/executionEngine.test.js",
+      "tests/core/eventBus.test.js",
+      "tests/core/visualizationEngine.test.js"
+    ];
+
+    var out = document.getElementById("out");
+    var statusEl = document.getElementById("status");
+    var rerunBtn = document.getElementById("rerun");
+    var loadErrors = [];
+
+    function loadScript(src) {
+      return new Promise(function (resolve) {
+        var s = document.createElement("script");
+        s.src = "../" + src;
+        s.onload = function () { resolve(); };
+        s.onerror = function () {
+          loadErrors.push(src);
+          resolve(); // keep going so one missing file does not hide the rest
+        };
+        document.head.appendChild(s);
+      });
+    }
+
+    function loadAll(files) {
+      return files.reduce(function (p, f) {
+        return p.then(function () { return loadScript(f); });
+      }, Promise.resolve());
+    }
+
+    function render(results) {
+      var groups = new Map();
+      results.forEach(function (r) {
+        if (!groups.has(r.group)) groups.set(r.group, []);
+        groups.get(r.group).push(r);
+      });
+
+      var passed = results.filter(function (r) { return r.ok; }).length;
+      var failed = results.length - passed;
+
+      out.innerHTML = "";
+      groups.forEach(function (list, name) {
+        var gPassed = list.filter(function (r) { return r.ok; }).length;
+        var sec = document.createElement("section");
+        sec.className = "group";
+        var h = document.createElement("h2");
+        h.textContent = name;
+        var c = document.createElement("span");
+        c.className = "count";
+        c.textContent = gPassed + "/" + list.length;
+        h.appendChild(c);
+        sec.appendChild(h);
+
+        var ul = document.createElement("ul");
+        list.forEach(function (r) {
+          var li = document.createElement("li");
+          li.className = r.ok ? "ok" : "bad";
+          var label = document.createElement("span");
+          label.textContent = r.name;
+          li.appendChild(label);
+          if (!r.ok) {
+            var msg = document.createElement("span");
+            msg.className = "msg";
+            msg.textContent = r.message;
+            li.appendChild(msg);
+          }
+          ul.appendChild(li);
+        });
+        sec.appendChild(ul);
+        out.appendChild(sec);
+      });
+
+      statusEl.className = "pill " + (failed ? "fail" : "pass");
+      statusEl.textContent = passed + " passed / " + results.length + " total" +
+        (loadErrors.length ? " (" + loadErrors.length + " file(s) failed to load)" : "");
+      rerunBtn.hidden = false;
+    }
+
+    function run() {
+      loadErrors = [];
+      statusEl.className = "pill run";
+      statusEl.textContent = "Loading sources\u2026";
+      out.innerHTML = '<p class="loading">Loading sources\u2026</p>';
+      rerunBtn.hidden = true;
+
+      // Each script must fully evaluate before the next one is appended,
+      // otherwise shared globals race.
+      loadAll(SOURCES)
+        .then(function () { return loadScript("tests/suite.js"); })
+        .then(function () { return loadAll(TEST_SUITES); })
+        .then(function () {
+          var AV = window.AV;
+          if (!AV || typeof AV.runTests !== "function") {
+            statusEl.className = "pill fail";
+            statusEl.textContent = "Harness did not load - AV.runTests missing";
+            out.innerHTML = '<p class="loading">Could not find <code>AV.runTests</code>. ' +
+              "Serve this folder over HTTP (for example <code>python -m http.server</code>) " +
+              "and open <code>/tests/test.html</code>.</p>";
+            return;
+          }
+          render(AV.runTests());
+        });
+    }
+
+    rerunBtn.addEventListener("click", run);
+    run();
+  </script>
+</body>
+</html>
