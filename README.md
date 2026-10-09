@@ -12,22 +12,82 @@ No frameworks, no build step, no backend.
 
 ## Contents
 
-- [Quick start](#quick-start)
+- [Live demo](#live-demo)
+- [Features](#features)
 - [What is inside](#what-is-inside)
 - [How it works](#how-it-works)
+- [Modes](#modes)
 - [Project structure](#project-structure)
 - [Testing](#testing)
+- [Performance](#performance)
 - [Keyboard shortcuts](#keyboard-shortcuts)
+- [Accessibility](#accessibility)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Screenshots](#screenshots)
 - [Browser support](#browser-support)
 - [Deploying](#deploying)
-- [Accessibility](#accessibility)
+- [Roadmap](#roadmap)
+- [GitHub repository](#github-repository)
+- [Release information](#release-information)
 - [License](#license)
 
 ---
 
-## Quick start
+## Live demo
 
-It is a static site. Any of these work:
+**Deployment in progress.** The production URL is filled in once the Vercel
+deployment completes - see [Release information](#release-information).
+
+GitHub repository: <https://github.com/deepsh3969/AlgoVisualizer>
+
+---
+
+## Features
+
+Everything below is implemented and covered by the test suite.
+
+**Playback**
+
+- Step-by-step execution - forward and backward, to any step
+- Play / pause / reset with a seekable progress bar
+- Six playback speeds (0.25x - 4x)
+- Jump to start or end in one click
+
+**Input**
+
+- Array generation: size, seed, sorted / reversed / random / skewed shapes
+- Custom input (paste your own array)
+- Graph editor: node count, weights, start and target selection
+- Per-structure operations (push, pop, insert, delete, search, traverse)
+
+**Analysis**
+
+- Live metrics (comparisons, swaps, writes, visits, calls)
+- Complexity panel with symbolic Big-O and a measured-vs-predicted view
+- Pseudocode with active-line highlighting
+- Comparison mode - two algorithms side by side with a head-to-head verdict
+- Benchmark mode - size ladders with warm-up and adaptive repeats
+
+**Modes and content**
+
+- Learning mode - 9 lessons linked to live demos
+- Quiz mode - 40 questions, 7 categories, per-answer explanations
+- Command-palette search over algorithms, structures and lessons
+
+**Application**
+
+- Light / dark / system theme
+- LocalStorage persistence of preferences, recent items and progress
+- Responsive UI from 380px (drawer sidebar, wrapping aux column)
+- Keyboard shortcuts for search and playback
+- Skip link, focus rings and an `aria-live` status region
+
+---
+
+## Installation
+
+It is a static site - there is nothing to install. Any of these work:
 
 ```bash
 # 1. Python
@@ -50,6 +110,22 @@ node tests/run-tests.js
 
 Or open <http://127.0.0.1:4173/tests/test.html> to run the same assertions in
 the browser.
+
+---
+
+## Usage
+
+1. Pick an algorithm from the sidebar or press <kbd>/</kbd> to search for one.
+2. Shape the input at the top of the workspace - size, seed, distribution,
+   custom values, search target or graph nodes depending on the algorithm.
+3. Press **Play**, or step through with the arrows / <kbd>←</kbd> <kbd>→</kbd>.
+4. Watch the metrics, complexity and pseudocode update in the panel as the
+   algorithm runs. Rewind at any time - steps are free.
+5. Open **Compare** to race two algorithms, **Benchmark** to measure them over
+   a size ladder, **Learn** for the written lessons, or **Quiz** to test
+   yourself.
+
+Your theme, speed, recent items and lesson progress persist in localStorage.
 
 ---
 
@@ -85,6 +161,33 @@ the browser.
 ## How it works
 
 The whole design rests on one idea: **an algorithm narrates, it does not draw.**
+
+### Architecture
+
+```
+Algorithm
+    |
+    v
+Execution Events
+    |
+    v
+Execution Engine
+    |
+    v
+Visualization State
+    |
+    v
+Renderer
+    |
+    v
+UI
+```
+
+Algorithms produce structured execution events which are consumed by the
+visualization engine. The engine turns that stream into an ordered,
+seekable timeline; the renderer reads the current state and paints it; the UI
+only ever displays state and forwards user intent back to the engine. No
+algorithm ever touches the DOM, and no renderer ever re-runs an algorithm.
 
 ### 1. Algorithms emit events
 
@@ -141,6 +244,45 @@ plotted next to the theoretical curve.
 algorithm.run() ──> events ──> timeline + checkpoints ──> engine ──> renderer
                               └──> metrics ─────────────> panel / benchmark
 ```
+
+---
+
+## Modes
+
+### Complexity analysis
+
+Every algorithm declares its time and space bounds. `AV.metrics` evaluates
+those Big-O expressions symbolically, ranks two algorithms against each other
+and produces the head-to-head verdict shown in compare mode. The same panel
+plots measured wall-clock time against the predicted curve, so the theory and
+the observation sit next to each other.
+
+### Benchmarking
+
+Pick a category and a size ladder; the harness warms up, then repeats each
+size with an adaptive number of runs and records min / max / mean. Results
+render as a measured-vs-predicted chart and are stored in localStorage so
+previous runs stay comparable.
+
+### Learning mode
+
+9 written lessons (beginner and intermediate) covering complexity, choosing a
+sort, searching models, pattern toolkits, graph vocabulary, BFS vs DFS,
+recursion and call stacks, storage shapes and tree invariants. Each lesson
+links straight into the live demo of the algorithm it discusses and records
+reading progress.
+
+### Quiz mode
+
+40 questions across 7 categories with easy / medium / hard difficulty. Every
+answer shows an explanation, and each question links back to its lesson and
+algorithm when one is related.
+
+### Comparison mode
+
+Run two algorithms on the same input side by side. Both workspaces share one
+playback clock, and the panel reports which one compared, swapped or wrote
+less on that input.
 
 ---
 
@@ -218,6 +360,21 @@ What the suites cover:
 
 ---
 
+## Performance
+
+- **No build step** - the shipped bytes are the source bytes: ~480 KB of JS and
+  ~87 KB of CSS across 61 script tags, all local, no CDN and no remote fonts
+- **Checkpointed timeline** - a state snapshot every 64 steps makes seeking and
+  step-backwards O(checkpoint) instead of a full re-run from step 0
+- **Bounded frame work** - at most 60 steps are applied per animation frame, so
+  playback never blocks the main thread even at 4x on a 500-element array
+- **Deterministic inputs** - a seeded PRNG means every array and graph in a
+  demo, a test and a screenshot is reproducible
+- **Capped persistence** - localStorage writes are bounded (benchmark history
+  keeps the last 8 runs) so storage never grows without limit
+
+---
+
 ## Keyboard shortcuts
 
 | Key | Action |
@@ -279,6 +436,59 @@ No build command, no output directory - the root is the site.
   and text
 - Responsive from 380px up; the sidebar becomes a drawer and the aux column
   wraps
+
+---
+
+## Screenshots
+
+Screenshots are captured from the deployed build and committed under
+`screenshots/`. If they are not present yet, generate them locally:
+
+```bash
+# with the site served on :4173
+python -m http.server 4173
+# then capture the views you want (home, workspace, compare, quiz, benchmark)
+```
+
+The views worth capturing:
+
+| View | Route |
+| --- | --- |
+| Home | `#/` |
+| Sorting workspace | `#/algorithm/quickSort` |
+| Graph workspace | `#/algorithm/bfs` |
+| Compare mode | `#/compare` |
+| Benchmark | `#/benchmark` |
+| Quiz | `#/quiz` |
+
+---
+
+## Roadmap
+
+- [x] 16 algorithms with event-driven visualization
+- [x] 5 data structures with dedicated renderers
+- [x] Seekable timeline with checkpointed rewinding
+- [x] Complexity analysis, benchmark harness, compare mode
+- [x] Lessons, quiz, search, themes, persistence, responsive layout
+- [ ] Export a run as GIF/video from the browser
+- [ ] Additional algorithms (A*, topological sort, union-find, AVL/red-black)
+- [ ] Custom user-authored algorithm input scripts
+- [ ] Shareable state via URL (algorithm + input + step)
+
+---
+
+## GitHub repository
+
+<https://github.com/deepsh3969/AlgoVisualizer>
+
+---
+
+## Release information
+
+- **Version:** v1.0.0 - Initial Release
+- **Tag:** <https://github.com/deepsh3969/AlgoVisualizer/releases/tag/v1.0.0>
+- **Changelog:** see [CHANGELOG.md](CHANGELOG.md)
+- **Live demo:** deployment in progress (URL added after Vercel deployment)
 
 ---
 
