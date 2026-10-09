@@ -34,3 +34,6 @@ build/
 # Test artifacts
 coverage/
 tests/coverage/
+
+.vercel
+.env*
