@@ -440,25 +440,44 @@ No build command, no output directory - the root is the site.
 
 ## Screenshots
 
-Screenshots are captured from the deployed build and committed under
-`screenshots/`. If they are not present yet, generate them locally:
+Captured from the deployed build at 1440x900 and committed under
+`screenshots/`.
 
-```bash
-# with the site served on :4173
-python -m http.server 4173
-# then capture the views you want (home, workspace, compare, quiz, benchmark)
-```
+### Home
 
-The views worth capturing:
+![AlgoVisualizer home page](screenshots/home.png)
 
-| View | Route |
-| --- | --- |
-| Home | `#/` |
-| Sorting workspace | `#/algorithm/quickSort` |
-| Graph workspace | `#/algorithm/bfs` |
-| Compare mode | `#/compare` |
-| Benchmark | `#/benchmark` |
-| Quiz | `#/quiz` |
+Route: `#/`
+
+### Sorting workspace
+
+![Quick Sort workspace showing bars, metrics and pseudocode](screenshots/sorting-workspace.png)
+
+Route: `#/algorithm/quickSort`
+
+### Graph workspace
+
+![Breadth-First Search workspace showing the graph, frontier and metrics](screenshots/graph-workspace.png)
+
+Route: `#/algorithm/bfs`
+
+### Compare mode
+
+![Compare mode](screenshots/compare.png)
+
+Route: `#/compare`
+
+### Benchmark mode
+
+![Benchmark mode](screenshots/benchmark.png)
+
+Route: `#/benchmark`
+
+### Quiz mode
+
+![Quiz mode](screenshots/quiz.png)
+
+Route: `#/quiz`
 
 ---
 
