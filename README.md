@@ -36,8 +36,7 @@ No frameworks, no build step, no backend.
 
 ## Live demo
 
-**Deployment in progress.** The production URL is filled in once the Vercel
-deployment completes - see [Release information](#release-information).
+**[Launch AlgoVisualizer](https://algovisualizer-theta.vercel.app)**
 
 GitHub repository: <https://github.com/deepsh3969/AlgoVisualizer>
 
@@ -488,7 +487,7 @@ The views worth capturing:
 - **Version:** v1.0.0 - Initial Release
 - **Tag:** <https://github.com/deepsh3969/AlgoVisualizer/releases/tag/v1.0.0>
 - **Changelog:** see [CHANGELOG.md](CHANGELOG.md)
-- **Live demo:** deployment in progress (URL added after Vercel deployment)
+- **Live demo:** <https://algovisualizer-theta.vercel.app>
 
 ---
 
