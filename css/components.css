@@ -1739,6 +1739,13 @@ input[type="range"]:disabled {
   border-bottom: 1px solid var(--av-border);
 }
 
+.search-input-row svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: var(--av-text-muted);
+}
+
 .search-input-row input {
   flex: 1 1 auto;
   border: 0;
@@ -1784,11 +1791,13 @@ input[type="range"]:disabled {
 .search-result .sr-title {
   font-size: var(--av-text-md);
   font-weight: var(--av-weight-medium);
+  display: block;
 }
 
 .search-result .sr-sub {
   font-size: var(--av-text-xs);
   color: var(--av-text-muted);
+  display: block;
 }
 
 .search-result .sr-kind {

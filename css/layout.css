@@ -199,7 +199,8 @@ kbd {
 
 .icon-btn svg,
 .nav-link svg,
-.btn svg {
+.btn svg,
+.header-search-btn svg {
   width: 16px;
   height: 16px;
   flex: 0 0 auto;
